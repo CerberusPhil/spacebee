@@ -344,17 +344,25 @@
         }
         
         /* 手机控制按钮 */
-        #mobile-controls {
+  /* 新增或修改的移动控制样式 */
+       #mobile-controls {
             display: none;
             width: 100%;
-            margin-top: 20px;
-            justify-content: space-between;
-            padding: 0 20px;
+            margin-top: 10px;
+            position: relative;
+        }
+        
+        .mobile-controls-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 0 10px;
         }
         
         .mobile-btn {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: rgba(26, 0, 51, 0.7);
             border: 2px solid var(--neon-blue);
             color: var(--neon-blue);
@@ -368,15 +376,42 @@
         }
         
         #fire-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 100px;
             background: rgba(26, 0, 51, 0.7);
             border: 2px solid var(--neon-orange);
             color: var(--neon-orange);
+            margin: 0 20px; /* 左右留出间距 */
+        }
+
+        /* 调整游戏容器高度 */
+        @media (max-width: 768px) {
+            #game-container {
+                width: 100%;
+                height: 60vh;
+                max-width: 400px;
+            }
+            
+            #mobile-controls {
+                display: block;
+            }
+            
+            .mobile-controls-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        /* 针对小屏幕手机的优化 */
+        @media (max-width: 480px) {
+            .mobile-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.3rem;
+            }
+            
+            #fire-btn {
+                margin: 0 15px;
+            }
         }
         
         /* 响应式设计 */
@@ -446,12 +481,13 @@
                 </div>
             </div>
             
-            <div id="mobile-controls">
-                <div class="mobile-btn" id="left-btn">←</div>
-                <div class="mobile-btn" id="right-btn">→</div>
-                <div class="mobile-btn" id="fire-btn">⚡</div>
-            </div>
+    <div id="mobile-controls">
+        <div class="mobile-move-btns">
+            <div class="mobile-btn" id="left-btn">←</div>
+            <div class="mobile-btn" id="right-btn">→</div>
         </div>
+        <div class="mobile-btn" id="fire-btn">⚡</div>
+    </div>
         
         <div id="instructions">
             <h3>操作指南</h3>
