@@ -343,20 +343,18 @@
             font-family: monospace;
         }
         
-        /* 手机控制按钮 */
-  /* 新增或修改的移动控制样式 */
-       #mobile-controls {
+/* 修改后的移动控制样式 */
+        #mobile-controls {
             display: none;
             width: 100%;
             margin-top: 10px;
             position: relative;
         }
         
-        .mobile-controls-container {
+        .mobile-move-btns {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
+            justify-content: space-between;
+            width: calc(100% - 90px); /* 为发射按钮留出空间 */
             padding: 0 10px;
         }
         
@@ -373,13 +371,18 @@
             justify-content: center;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            margin: 0 5px;
         }
         
         #fire-btn {
+            position: absolute;
+            right: 20px;
+            bottom: 0;
+            width: 70px;
+            height: 70px;
             background: rgba(26, 0, 51, 0.7);
             border: 2px solid var(--neon-orange);
             color: var(--neon-orange);
-            margin: 0 20px; /* 左右留出间距 */
         }
 
         /* 调整游戏容器高度 */
@@ -391,13 +394,15 @@
             }
             
             #mobile-controls {
-                display: block;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
             }
             
-            .mobile-controls-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            .mobile-move-btns {
+                width: auto;
+                flex-grow: 1;
             }
         }
 
@@ -410,7 +415,9 @@
             }
             
             #fire-btn {
-                margin: 0 15px;
+                width: 60px;
+                height: 60px;
+                right: 10px;
             }
         }
         
