@@ -824,53 +824,90 @@
             player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
         }
         
-        // 绘制T65B X翼战机
-        function drawPlayer() {
-            ctx.save();
-            
-            // 战机主体
-            ctx.fillStyle = '#555';
-            ctx.beginPath();
-            ctx.moveTo(player.x + player.width/2, player.y);
-            ctx.lineTo(player.x + player.width, player.y + player.height/2);
-            ctx.lineTo(player.x + player.width/2, player.y + player.height);
-            ctx.lineTo(player.x, player.y + player.height/2);
-            ctx.closePath();
-            ctx.fill();
-            
-            // 驾驶舱
-            ctx.fillStyle = '#00F5FF';
-            ctx.beginPath();
-            ctx.arc(player.x + player.width/2, player.y + player.height/2, 10, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 机翼
-            ctx.fillStyle = '#777';
-            ctx.fillRect(player.x + player.width/2 - 25, player.y + player.height/2 - 5, 50, 10);
-            
-            // 引擎喷口
-            ctx.fillStyle = '#FF6B00';
-            ctx.beginPath();
-            ctx.moveTo(player.x + player.width/2 - 10, player.y + player.height);
-            ctx.lineTo(player.x + player.width/2, player.y + player.height + 10);
-            ctx.lineTo(player.x + player.width/2 + 10, player.y + player.height);
-            ctx.closePath();
-            ctx.fill();
-            
-            // 移动时的推进器效果
-            if (Math.abs(player.speed) > 0.1) {
-                ctx.fillStyle = '#FF6B00';
-                ctx.beginPath();
-                ctx.moveTo(player.x + player.width/2 - 8, player.y + player.height);
-                ctx.lineTo(player.x + player.width/2, player.y + player.height + 15);
-                ctx.lineTo(player.x + player.width/2 + 8, player.y + player.height);
-                ctx.closePath();
-                ctx.fill();
-            }
-            
-            ctx.restore();
-        }
-        
+
+function drawPlayer() {
+    ctx.save();
+    
+    // 战机主体 (菱形隐身设计)
+    ctx.fillStyle = '#555';
+    ctx.beginPath();
+    ctx.moveTo(player.x + player.width/2, player.y); // 顶部
+    ctx.lineTo(player.x + player.width, player.y + player.height/2); // 右侧
+    ctx.lineTo(player.x + player.width/2, player.y + player.height); // 底部
+    ctx.lineTo(player.x, player.y + player.height/2); // 左侧
+    ctx.closePath();
+    ctx.fill();
+    
+    // 驾驶舱 (细长设计)
+    ctx.fillStyle = '#00F5FF';
+    ctx.beginPath();
+    ctx.ellipse(player.x + player.width/2, player.y + player.height/3, 
+                8, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // 机翼细节 (隐身战机棱角)
+    ctx.strokeStyle = '#777';
+    ctx.lineWidth = 2;
+    // 前缘襟翼
+    ctx.beginPath();
+    ctx.moveTo(player.x + player.width/3, player.y + player.height/3);
+    ctx.lineTo(player.x + player.width*2/3, player.y + player.height/3);
+    ctx.stroke();
+    // 后缘襟翼
+    ctx.beginPath();
+    ctx.moveTo(player.x + player.width/4, player.y + player.height*2/3);
+    ctx.lineTo(player.x + player.width*3/4, player.y + player.height*2/3);
+    ctx.stroke();
+    
+    // 双发动机喷口
+    ctx.fillStyle = '#FF6B00';
+    // 左发动机
+    ctx.beginPath();
+    ctx.ellipse(player.x + player.width/3, player.y + player.height*3/4, 
+                5, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // 右发动机
+    ctx.beginPath();
+    ctx.ellipse(player.x + player.width*2/3, player.y + player.height*3/4, 
+                5, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // 移动时的推进器效果
+    if (Math.abs(player.speed) > 0.1) {
+        ctx.fillStyle = '#FF6B00';
+        // 左推进火焰
+        ctx.beginPath();
+        ctx.moveTo(player.x + player.width/3 - 5, player.y + player.height);
+        ctx.lineTo(player.x + player.width/3, player.y + player.height + 15);
+        ctx.lineTo(player.x + player.width/3 + 5, player.y + player.height);
+        ctx.closePath();
+        ctx.fill();
+        // 右推进火焰
+        ctx.beginPath();
+        ctx.moveTo(player.x + player.width*2/3 - 5, player.y + player.height);
+        ctx.lineTo(player.x + player.width*2/3, player.y + player.height + 15);
+        ctx.lineTo(player.x + player.width*2/3 + 5, player.y + player.height);
+        ctx.closePath();
+        ctx.fill();
+    }
+    
+    // 隐身战机的边缘光效
+    ctx.shadowColor = '#00F5FF';
+    ctx.shadowBlur = 10;
+    ctx.strokeStyle = '#00F5FF';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(player.x + player.width/2, player.y);
+    ctx.lineTo(player.x + player.width, player.y + player.height/2);
+    ctx.lineTo(player.x + player.width/2, player.y + player.height);
+    ctx.lineTo(player.x, player.y + player.height/2);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    
+    ctx.restore();
+}
+      
         // 发射子弹
         function shoot() {
             // 限制子弹数量防止过多
